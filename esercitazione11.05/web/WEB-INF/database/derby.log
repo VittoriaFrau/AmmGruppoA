@@ -1,0 +1,50 @@
+Wed May 11 15:15:16 CEST 2016 : Server di rete Apache Derby: 10.11.1.2 - (1629631) avviato e pronto ad accettare connessioni sulla porta 1527
+----------------------------------------------------------------
+Wed May 11 15:15:17 CEST 2016:
+Avvio della versione di Derby The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): istanza a816c00e-0154-9ff5-0929-00004eee0d25
+sulla directory di database /home/vicky/NetBeansProjects/AmmGruppoA/AmmGruppoA/esercitazione11.05/web/WEB-INF/database/database_biblioteca con caricatore classi sun.misc.Launcher$AppClassLoader@5e2de80c 
+Caricato da file:/home/vicky/Scaricati/jdk1.8.0_73/db/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_73-b02
+user.dir=/home/vicky/Scaricati/jdk1.8.0_73/db
+os.name=Linux
+os.arch=amd64
+os.version=3.16.0-71-generic
+derby.system.home=/home/vicky/NetBeansProjects/AmmGruppoA/AmmGruppoA/esercitazione11.05/web/WEB-INF/database
+Programma di caricamento classe database avviato - derby.database.classpath=''
+----------------------------------------------------------------
+Wed May 11 15:17:19 CEST 2016:
+Arresto dell'istanza a816c00e-0154-9ff5-0929-00004eee0d25 nella directory del database /home/vicky/NetBeansProjects/AmmGruppoA/AmmGruppoA/esercitazione11.05/web/WEB-INF/database/database_biblioteca con il caricatore di classi sun.misc.Launcher$AppClassLoader@5e2de80c 
+Wed May 11 15:17:19 CEST 2016 Thread[DRDAConnThread_2,5,main] (DATABASE = database_biblioteca), (DRDAID = {3}), Chiusura del database 'database_biblioteca'.
+----------------------------------------------------------------
+Wed May 11 15:17:37 CEST 2016:
+Avvio della versione di Derby The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): istanza d46b80cd-0154-9ff5-0929-00004eee0d25
+sulla directory di database /home/vicky/NetBeansProjects/AmmGruppoA/AmmGruppoA/esercitazione11.05/web/WEB-INF/database/database_biblioteca con caricatore classi sun.misc.Launcher$AppClassLoader@5e2de80c 
+Caricato da file:/home/vicky/Scaricati/jdk1.8.0_73/db/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_73-b02
+user.dir=/home/vicky/Scaricati/jdk1.8.0_73/db
+os.name=Linux
+os.arch=amd64
+os.version=3.16.0-71-generic
+derby.system.home=/home/vicky/NetBeansProjects/AmmGruppoA/AmmGruppoA/esercitazione11.05/web/WEB-INF/database
+Programma di caricamento classe database avviato - derby.database.classpath=''
+----------------------------------------------------------------
+Wed May 11 15:17:47 CEST 2016:
+Arresto dell'istanza d46b80cd-0154-9ff5-0929-00004eee0d25 nella directory del database /home/vicky/NetBeansProjects/AmmGruppoA/AmmGruppoA/esercitazione11.05/web/WEB-INF/database/database_biblioteca con il caricatore di classi sun.misc.Launcher$AppClassLoader@5e2de80c 
+Wed May 11 15:17:47 CEST 2016 Thread[DRDAConnThread_3,5,main] (DATABASE = database_biblioteca), (DRDAID = {5}), Chiusura del database 'database_biblioteca'.
+----------------------------------------------------------------
+Wed May 11 15:17:57 CEST 2016:
+Avvio della versione di Derby The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): istanza 6029c16b-0154-9ff5-0929-00004eee0d25
+sulla directory di database /home/vicky/NetBeansProjects/AmmGruppoA/AmmGruppoA/esercitazione11.05/web/WEB-INF/database/database_biblioteca con caricatore classi sun.misc.Launcher$AppClassLoader@5e2de80c 
+Caricato da file:/home/vicky/Scaricati/jdk1.8.0_73/db/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_73-b02
+user.dir=/home/vicky/Scaricati/jdk1.8.0_73/db
+os.name=Linux
+os.arch=amd64
+os.version=3.16.0-71-generic
+derby.system.home=/home/vicky/NetBeansProjects/AmmGruppoA/AmmGruppoA/esercitazione11.05/web/WEB-INF/database
+Programma di caricamento classe database avviato - derby.database.classpath=''
+----------------------------------------------------------------
+Wed May 11 16:29:07 CEST 2016: arresto in corso del motore di Derby
