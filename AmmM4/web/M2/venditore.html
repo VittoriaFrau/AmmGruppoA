@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>    
+        <title>Victoria's Outlet</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Vittoria Frau">
+        <meta name="keywords" content="scarpe, vestiti, abbigliamento, moda, saldi, outlet">   
+        <link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+    </head>
+    <body>
+        <div class="page"> 
+            
+         <div class="header">
+            <h1>Vendi con noi!</h1>
+         </div>
+        
+        <div class="sidebarsx">
+        <!-- Sezione di navigazione -->
+        <nav>
+            <ul>
+                <li><a href="descrizione.html">Pagina iniziale </a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+        </div>
+        
+        <div class="content">
+        <!-- form per l'inserimento di un oggetto da vendere -->
+        <form action="demo_form.asp" method="GET">
+                <!-- Nell'ordine: Nome dell’oggetto, URL di una immagine descrittiva,
+                     Descrizione dell’oggetto, Prezzo, Quantità di oggetti disponibili-->
+            <label for="name">Nome dell'oggetto</label>
+            <input type="text" name="name" id="name" />
+            
+            
+            <label for="Url">Url dell'immagine</label>
+            <input type="url" name="Url" id="Url" />
+            
+            
+            <label for="description">Breve descrizione</label>
+            <textarea rows="7" cols="10" name="description" id="description">Inserisci una descrizione dell'oggetto
+            </textarea>
+            
+            
+            <label for="price">Prezzo</label>
+            <input type="number" name="price" id="price" />
+            
+            
+            <label for="quantity">Quantità</label>
+            <input type="number" name="quantity" id="quantity" min="1" max="100" />
+           
+             
+            <!-- Pulsanti submit e reset -->
+            <div>
+                <input class="bottone" type="submit" value="Continua">
+                <input class="bottone" type="reset" value="Resetta">
+            </div>
+        </form>
+        </div>
+        
+        
+        <div class="footer">
+            <p>Il contenuto di questo sito è protetto dal copyright ed è di 
+                proprietà di Frau Vittoria. Scrivici all'indirizzo mail: fakemail@gmail.com </p>
+        </div>
+        </div>
+    </body>
+</html>

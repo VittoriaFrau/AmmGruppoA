@@ -1,0 +1,219 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 3-apr-2016, 19.40.49
+    Author     : vicky
+*/
+/* Impostazioni che valgono per tutte le pagine */
+ body {   
+        background-color: white;
+        color: black; 
+        font-family: "Palatino Linotype", Palatino, Arial;
+
+ }   
+
+ h1 { 
+        text-align: center;
+        color: white;
+ }
+
+ h2 {
+        text-align: left;
+        margin-left: 4px;
+        color: black;
+
+ }
+
+ h3 {
+        color: black;
+        text-align: justify;
+ }
+/* proprietà per i link*/
+ a:link{
+        color: black;
+        font-style: italic;
+        font-size: 22px;
+ }
+
+ a:visited{
+        font-size: 22px;
+        font-style: italic;
+ }
+
+ a:hover{
+        font-style: normal;
+ }
+
+    /*Visualizzazione dei campi di input*/
+ input:focus, textarea:focus{
+        background-color: lightgray;
+        border-bottom-color: black;
+        
+ }
+
+ /* tabella dei prodotti */
+  table{
+     border: 2px solid #BF8DDD;
+     border-collapse: collapse;
+     width: 70%;
+     empty-cells: show;
+     margin:auto;
+     padding-left: 100px;
+ }
+ 
+ td{
+     text-align: center;
+     padding: 30px;
+     border-right: 1px solid #BF8DDD;
+
+ }
+ 
+ th{
+     font-weight: bold;
+     font-size: 20px;
+ }
+ 
+ /* classi per le righe della tabella */
+ .cl1{
+     background-color: #FFDAB9;
+ }
+ 
+ .cl2{
+     background-color: #BF8DDD;
+ }
+ 
+ /* elemento h2 che deve rimanere bianco */
+ #white{
+     color: white;
+     text-align: center;
+ }
+
+  label::after, label::before{
+     content:'\A';
+     white-space:pre;
+ }
+
+ 
+ textarea, input{
+     width: 30%;
+     
+ }
+ 
+ text-area{
+     text-align: right;
+ }
+ 
+ /* impostazioni per il form  della login e inserimento nuovo oggetto*/
+ form{
+     border: 1px solid black;
+     background-color: white;
+     width: auto;
+     padding-left: 350px;
+ }
+ 
+ /* proprietà per i bottoni di invio e resetta */
+ .bottone{
+     width: 100px;
+     height: 30px;
+     background-color: black;
+     color: white;
+     padding: 3px;
+     font-size: 15px;
+     margin-bottom: 30px;
+     margin-top: 10px;
+ }
+ 
+ .bottone:hover{
+     background-color: gray;
+ }
+ /* Layout responsive */
+ 
+ /*  Per larghezze maggiori o uguali a 1024px ho utilizzato un layout a due colonne */
+ @media screen and (min-width: 1024px){
+     
+     .header{
+         width: auto;
+         height: 140px;
+         background-color: red;
+         border: solid peachpuff 3px;
+     }
+     
+     .footer{
+         width: auto;
+         height: 80px;
+         background-color: red;
+         border: solid peachpuff 3px;
+         text-align: center;
+     }
+     
+     body{
+         width: 100%;
+         background-color: white;
+     }
+     
+     .page{
+         width: 90%;
+         padding-left: 65px;
+     }
+     
+     .sidebarsx{
+         float: left;
+         width: 180px;
+         
+     }
+     
+     .content{
+         margin-left: 180px;
+     }
+ }
+ /* Per quelli intermedi utilizzare massimo due colonne. */
+ @media screen and (min-width: 480px)
+               and (max-width: 1024px){
+                   
+     .header{
+         width: auto;
+         height: 140px;
+         background-color: red;
+         border: solid peachpuff 3px;
+     }
+     
+     .footer{
+         width: auto;
+         height: 80px;
+         background-color: red;
+         border: solid peachpuff 3px;
+         text-align: center;
+     }
+     
+     body{
+         width: 100%;
+         background-color: white;
+     }
+     
+     .page{
+         width: 90%;
+         padding-left: 65px;
+     }
+     
+     .sidebarsx{
+         float: left;
+         width: 180px;
+         
+     }
+       
+     .content{
+         margin-left: 180px;
+     }
+ }
+ /*Per larghezze minori o uguali a 480px utilizzare un layout ad una sola colonna */
+ @media screen and (max-width: 480px){
+     
+     .page{ 
+         margin: 2px;
+         padding: 1px;
+     }
+ }
+ 
