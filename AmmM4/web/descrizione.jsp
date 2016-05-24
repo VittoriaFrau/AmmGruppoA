@@ -25,7 +25,7 @@
             <div class="sidebarsx">
             <nav>
                 <ul>
-                    <li><h2><a href="login.html">Login</a></h2></li> 
+                    <li><a href="login.html">Login</a></li> 
                 </ul>
             </nav>
             

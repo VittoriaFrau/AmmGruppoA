@@ -5,7 +5,15 @@
  */
 package amm.modelli;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author vicky
@@ -13,6 +21,17 @@ import java.util.Objects;
 public class ObjectFactory {
     
     private static ObjectFactory singleton;
+    private String connectionString;
+    
+    public void setConnectionString(String s){
+    	this.connectionString = s;
+    }
+
+    public String getConnectionString(){
+    	return this.connectionString;
+    } 
+    
+    
     public static ObjectFactory getInstance() {  
         if (singleton == null) {    //la prima volta che chiamo getinstance singleton sarà null, alle successive restituiscono singleton
             singleton = new ObjectFactory(); //creo un nuovo gestore
@@ -20,92 +39,49 @@ public class ObjectFactory {
         return singleton;
     }
     
-private ArrayList <Object> listaOggetti = new ArrayList <Object>();
 
 private ObjectFactory(){//costruttore richiamato da getInstance
-    /*inizializzo la lista Oggetti*/
-    
-    /*primo oggetto*/
-    Object obj_1= new Object();
-    obj_1.setNome("Borsa in pelle");
-    obj_1.setPrezzo(50.0);
-    obj_1.setUrl("img/1.jpg");
-    obj_1.setDescrizione("Borsa in pelle marrone dimensioni medie");
-    obj_1.setNumPezzi(10) ;
-    obj_1.setId(610);
-    obj_1.setIdV(12); //gli passo l'id del venditore 2
-    listaOggetti.add(obj_1); //lo metto nella lista
-    
-    /*secondo oggetto*/
-    Object obj_2= new Object();
-    obj_2.setNome("Giacca scamosciata");
-    obj_2.setPrezzo(30.0);
-    obj_2.setUrl("img/2.jpg");
-    obj_2.setDescrizione("Giacca scamosciata tutte le taglie");
-    obj_2.setNumPezzi(30) ;
-    obj_2.setIdV(440);
-    obj_2.setIdV(123); //gli passo l'id del venditore 3
-    listaOggetti.add(obj_2);  //lo metto nella lista
-    
-    /*Terzo oggetto*/
-    Object obj_3= new Object();
-    obj_3.setNome("Salopette in jeans");
-    obj_3.setPrezzo(20.0);
-    obj_3.setUrl("img/3.jpeg");
-    obj_3.setDescrizione("Salopette in jeans per bambino");
-    obj_3.setNumPezzi(5) ;
-    obj_3.setId(78);
-    obj_3.setIdV(77); //gli passo l'id del venditore 1
-    listaOggetti.add(obj_3);  //lo metto nella lista
-    
-    /*Quarto oggetto*/
-    Object obj_4= new Object();
-    obj_4.setNome("Abito in pizzo");
-    obj_4.setPrezzo(25.0);
-    obj_4.setUrl("img/4.jpg");
-    obj_4.setDescrizione("Abito in pizzo nero da donna");
-    obj_4.setNumPezzi(15) ;
-    obj_4.setId(89);
-    obj_4.setIdV(12); //gli passo l'id del venditore 2
-    listaOggetti.add(obj_4);  //lo metto nella lista
-    
-    /*Quinto oggetto*/
-    Object obj_5= new Object();
-    obj_5.setNome("Pantaloni in cotone");
-    obj_5.setPrezzo(40.0);
-    obj_5.setUrl("img/5.jpg");
-    obj_5.setDescrizione("Pantaloni in cotone color crema");
-    obj_5.setNumPezzi(2) ;
-    obj_5.setId(45);
-    obj_5.setIdV(77); //gli passo l'id del venditore 1
-    listaOggetti.add(obj_5);  //lo metto nella lista
-    
-    /*Sesto oggetto*/
-    Object obj_6= new Object();
-    obj_6.setNome("Ballerine bimba");
-    obj_6.setPrezzo(15.0);
-    obj_6.setUrl("img/6.jpeg");
-    obj_6.setDescrizione("Ballerine rosa per bambina");
-    obj_6.setNumPezzi(20) ;
-    obj_6.setId(33);
-    obj_6.setIdV(123); //gli passo l'id del venditore 3
-    listaOggetti.add(obj_6);  //lo metto nella lista
-    
 }
- public ArrayList <Object> getObjectList () {//restituisce la lista di tutti gli oggetti
-        return listaOggetti;
-    }
- 
-  public Object getObjectbyId(Integer id){ //ogni oggetto ha un id, quindi mi restituisce ogni oggetto con un certo id
-         
-        for(Object u : listaOggetti) //scorro la lista di oggetti
-        {
-            if(Objects.equals(u.id, id)) //se l'id è uguale restituisco l'oggetto
-                return u;
+
+ public Object getOggetti (String nome, String url, String descrizione, double prezzo, Integer numPezzi, Integer idV, Integer id)
+    {
+        try{
+            Connection conn = DriverManager.getConnection(connectionString, "vicky", "123");
+            //Sql command
+            String query = "select * from Object where "
+                + "id = ? and nome = ? and url = ? and descrizione = ? "
+                + "prezzo = ? and numPezzi = ? and idV = ?";
+            
+            PreparedStatement stmt = conn.prepareStatement(query);
+            // Si associano valori e posizioni 
+            stmt.setString(1, nome);
+            stmt.setString(2, url);
+            stmt.setString(3, descrizione);
+            stmt.setDouble(4, prezzo);
+            stmt.setInt(5, numPezzi);
+            stmt.setInt(6, idV);
+           
+            ResultSet res = stmt.executeQuery(); //prendo i risultati e gli restituisco il valore dell'esecuzione della query
+            if(res.next())
+            {
+                Object o = new Object();
+                o.setNome(res.getString("nome"));
+                o.setUrl(res.getString("url"));
+                o.setDescrizione(res.getString("description"));
+                o.setId(res.getInt(numPezzi));
+                o.setPrezzo(res.getDouble("prezzo"));
+                o.setNumPezzi(res.getInt(numPezzi));
+                
+                
+                stmt.close();
+                conn.close();
+                return o;
+            }
+        }catch (SQLException e) {
+            Logger.getLogger(ObjectFactory.class.getName()).log(Level.SEVERE, null, e);
         }
         
-        return null; //non c'è oggetto con questo id
+        return null;
+        
     }
-  
-    
 }

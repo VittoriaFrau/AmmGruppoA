@@ -13,7 +13,7 @@ public class SaldoClientiVenditori {
     Integer id;
     double saldo;
     
-    SaldoClientiVenditori (){
+    public SaldoClientiVenditori (){
         
     }
 

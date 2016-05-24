@@ -83,7 +83,7 @@ public class cliente extends HttpServlet {
             request.getRequestDispatcher("riepilogo.jsp").forward(request, response);
         } else {
             //l'utente ha premuto comprami
-            if(comprami.getPrezzo() > SaldoClientiVenditoriFactory.getInstance(). getSaldoClientiVenditoribyId(cliente.getId()).getSaldo()){
+            if(comprami.getPrezzo() > SaldoClientiVenditoriFactory.getInstance().getSaldoClientiVenditoribyId(cliente.getId()).getSaldo()){
                 //Non ha abbastanza soldi
                 request.setAttribute("error", true);
                 request.setAttribute("listaOggetti", ObjectFactory.getInstance().getObjectList());

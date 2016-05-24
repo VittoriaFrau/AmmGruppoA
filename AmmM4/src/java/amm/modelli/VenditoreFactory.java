@@ -4,7 +4,14 @@
  * and open the template in the editor.
  */
 package amm.modelli;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,6 +20,15 @@ import java.util.ArrayList;
 public class VenditoreFactory {
     
     private static VenditoreFactory singleton;
+    private String connectionString;
+    
+    public void setConnectionString(String s){
+    	this.connectionString = s;
+    }
+
+    public String getConnectionString(){
+    	return this.connectionString;
+    } 
     public static VenditoreFactory getInstance() {  
         if (singleton == null) {    //la prima volta che chiamo getinstance singleton sarà null, alle successive restituiscono singleton
             singleton = new VenditoreFactory(); //creo un nuovo gestore
@@ -20,54 +36,58 @@ public class VenditoreFactory {
         return singleton;
     }
     
-     /*creo  un attributo da richiamare nel costruttore*/
-    public ArrayList <utenteVenditore> listaVenditori = new ArrayList <utenteVenditore>();
-    
     
     private VenditoreFactory(){  //costruttore richiamato da getInstance
-        /*inizializzo la listaVenditori*/
-        
-        /*Venditore 1*/
-        utenteVenditore venditore_1 = new utenteVenditore();//creo un venditore
-        venditore_1.setUser("Paolo22"); //aggiungo gli attributi
-        venditore_1.setPwd("atene43");
-        venditore_1.setId(77);
-        venditore_1.setIdConto(192);
-        listaVenditori.add(venditore_1);// lo metto nella lista
-        
-        /*Venditore 2*/
-        utenteVenditore venditore_2 = new utenteVenditore();//creo un venditore
-        venditore_2.setUser("Vale91"); //aggiungo gli attributi
-        venditore_2.setPwd("ciccioevale");
-        venditore_2.setId(12);
-        venditore_2.setIdConto(337);
-        listaVenditori.add(venditore_2);// lo metto nella lista
-        
-        /*Venditore 3*/
-        utenteVenditore venditore_3 = new utenteVenditore();//creo un venditore
-        venditore_3.setUser("LeoxD"); //aggiungo gli attributi
-        venditore_3.setPwd("DarkSouls");
-        venditore_3.setId(123);
-        venditore_3.setIdConto(50);
-        listaVenditori.add(venditore_3);// lo metto nella lista
        
-        
     }
 
     
-    public ArrayList <utenteVenditore> getVenditoreList () {//restituisce la lista di tutti i venditori nel sistema
-        return listaVenditori;
-    }
-
-    public utenteVenditore getVenditorebyId(Integer idV){ //ogni venditore ha un id, quindi mi restituisce ogni venditore con un certo id
-         
-        for(utenteVenditore u : listaVenditori) //scorro la lista di venditori
-        {
-            if(u.idV == idV) //se l'id è uguale restituisco il venditore
-                return u;
-        }
-        
-        return null; //non c'è venditore con questo id
+    public utenteVenditore getVenditori(String username, String pwd)
+    {
+        try {
+            
+            Connection conn = DriverManager.getConnection(connectionString, "vicky", "123");
+             //Sql command
+            String query = "select * from utenteVenditore where username = ? " 
+                + "and pwd = ?";
+            
+            PreparedStatement stmt = conn.prepareStatement(query);
+            // Si associano valori e posizioni 
+            stmt.setString(1, username); //1 ->il primo valore che passo
+            stmt.setString(2, pwd);
+            //esegui query
+            ResultSet res = stmt.executeQuery(); //prendo i risultati e gli restituisco il valore dell'esecuzione della query
+            
+            //per vedere se ci sono i risultati controllo il contenuto di res
+            if(res.next())
+            {
+                utenteVenditore venditore = new utenteVenditore();
+                venditore.setUser(res.getString("username"));
+                venditore.setPwd(res.getString("pwd"));
+                venditore.setId(res.getInt("idV"));
+                venditore.setIdConto(res.getInt("idConto"));
+                
+                // Essendo idConto in un altro database faccio una nuova query
+                
+                query= "select * from SaldoClientiVenditori " + "join saldo on saldo.id = saldo.id "
+                    + "where SaldoClientiVenditori.idConto = " ;
+                Statement st = conn.createStatement();
+                ResultSet res2 = st.executeQuery(query);
+                
+                while(res2.next()){ //uso un while 
+                SaldoClientiVenditori s=new SaldoClientiVenditori();
+                s.setId(res2.getInt("id"));
+                s.setSaldo(res2.getDouble("saldo"));
+                }
+                
+                stmt.close(); //chiudo
+                conn.close();
+                return venditore;
+            }
+        }catch (SQLException e) {
+            Logger.getLogger(VenditoreFactory.class.getName()).log(Level.SEVERE, null, e);
+          }
+        return null;
     }
 
 }

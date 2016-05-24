@@ -4,8 +4,14 @@
  * and open the template in the editor.
  */
 package amm.modelli;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,60 +19,69 @@ import java.util.Objects;
  */
 public class ClienteFactory {
     private static ClienteFactory singleton;
+    private String connectionString;
+    
+    public void setConnectionString(String s){
+    	this.connectionString = s;
+    }
+
+    public String getConnectionString(){
+    	return this.connectionString;
+    } 
     public static ClienteFactory getInstance() {  
         if (singleton == null) {    //la prima volta che chiamo getinstance singleton sarà null, alle successive restituiscono singleton
             singleton = new ClienteFactory(); //creo un nuovo gestore
         }
         return singleton;
     }
-    
-     /*creo  un attributo da richiamare nel costruttore*/
-     public ArrayList <utenteCliente> listaClienti = new ArrayList <utenteCliente>();
-    
-    
+  
     private ClienteFactory(){  //costruttore richiamato da getInstance
-        /*inizializzo la listaClienti*/
-        
-        /*Cliente 1*/
-        utenteCliente cliente_1 = new utenteCliente();//creo un cliente
-        cliente_1.setUsername("GiacomoF"); //aggiungo gli attributi
-        cliente_1.setPwd("globuLi");
-        cliente_1.setId(43);
-        cliente_1.setIdConto(99);
-        listaClienti.add(cliente_1);// lo metto nella lista
-        
-        /*Cliente 2*/
-        utenteCliente cliente_2 = new utenteCliente();//creo un cliente
-        cliente_2.setUsername("michi91"); //aggiungo gli attributi
-        cliente_2.setPwd("tabacco");
-        cliente_2.setId(100);
-        cliente_2.setIdConto(004);
-        listaClienti.add(cliente_2);// lo metto nella lista
-        
-        /*Cliente 3*/
-        utenteCliente cliente_3 = new utenteCliente();//creo un cliente
-        cliente_3.setUsername("viola"); //aggiungo gli attributi
-        cliente_3.setPwd("peppapig");
-        cliente_3.setId(17);
-        cliente_3.setIdConto(629);
-        listaClienti.add(cliente_3);// lo metto nella lista
-       
         
     }
 
-    
-    public ArrayList <utenteCliente> getClienteList () {//restituisce la lista di tutti i clienti nel sistema
-        return listaClienti;
-    }
-
-    utenteCliente getClientibyId(Integer id){ //ogni cliente ha un id, quindi mi restituisce ogni venditore con un certo id
-         
-        for(utenteCliente u : listaClienti) //scorro la lista di clienti
-        {
-            if(Objects.equals(u.id, id)) //se l'id è uguale restituisco il cliente
-                return u;
-        }
-        
-        return null; //non c'è cliente con questo id
+    public utenteCliente getClienti(String username, String pwd)
+    {
+        try {
+            
+            Connection conn = DriverManager.getConnection(connectionString, "vicky", "123");
+             //Sql command
+            String query = "select * from utenteCliente where username = ? " 
+                + "and pwd = ?";
+            
+            PreparedStatement stmt = conn.prepareStatement(query);
+            // Si associano valori e posizioni 
+            stmt.setString(1, username); //1 ->il primo valore che passo
+            stmt.setString(2, pwd);
+            //esegui query
+            ResultSet res = stmt.executeQuery(); //prendo i risultati e gli restituisco il valore dell'esecuzione della query
+            
+            //per vedere se ci sono i risultati controllo il contenuto di res
+            if(res.next())
+            {
+                utenteCliente cliente = new utenteCliente();
+                cliente.setUsername(res.getString("username"));
+                cliente.setPwd(res.getString("pwd"));
+                cliente.setId(res.getInt("id"));
+                cliente.setIdConto(res.getInt("idConto"));
+                
+                query= "select * from SaldoClientiVenditori " + "join saldo on saldo.id = saldo.id "
+                    + "where SaldoClientiVenditori.idConto = " ;
+                Statement st = conn.createStatement();
+                ResultSet res2 = st.executeQuery(query);
+                
+                while(res2.next()){ //uso un while 
+                SaldoClientiVenditori s=new SaldoClientiVenditori();
+                s.setId(res2.getInt("id"));
+                s.setSaldo(res2.getDouble("saldo"));
+                }
+                
+                stmt.close(); //chiudo
+                conn.close();
+                return cliente;
+            }
+        }catch (SQLException e) {
+            Logger.getLogger(ClienteFactory.class.getName()).log(Level.SEVERE, null, e);
+          }
+        return null;
     }
 }
