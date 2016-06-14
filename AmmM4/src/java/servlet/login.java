@@ -71,7 +71,7 @@ public class login extends HttpServlet {
             String pwd = request.getParameter("pw");
             
             //se è un cliente
-            utenteCliente client = ClienteFactory.getInstance().getClienti(username, pwd);
+            utenteCliente client = ClienteFactory.getInstance().getClient(username, pwd);
            
                 if(client.getUsername().equals(username) && client.getPwd().equals(pwd))
                 {
@@ -88,7 +88,7 @@ public class login extends HttpServlet {
                    }
         
             // se è un venditore
-            utenteVenditore vend = VenditoreFactory.getInstance().getVenditori(username, pwd);
+            utenteVenditore vend = VenditoreFactory.getInstance().getVenditore(username, pwd);
                 if(vend.getUser().equals(username) && vend.getPwd().equals(pwd))
                     {
                         session.setAttribute("loggedIn", true);

@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
@@ -42,8 +43,9 @@ public class VenditoreFactory {
     }
 
     
-    public utenteVenditore getVenditori(String username, String pwd)
+    public  ArrayList <utenteVenditore> getVenditoriList (String username, String pwd)
     {
+        ArrayList <utenteVenditore> listaVenditori = new ArrayList<>();
         try {
             
             Connection conn = DriverManager.getConnection(connectionString, "vicky", "123");
@@ -66,6 +68,7 @@ public class VenditoreFactory {
                 venditore.setPwd(res.getString("pwd"));
                 venditore.setId(res.getInt("idV"));
                 venditore.setIdConto(res.getInt("idConto"));
+                listaVenditori.add(venditore);
                 
                 // Essendo idConto in un altro database faccio una nuova query
                 
@@ -82,12 +85,67 @@ public class VenditoreFactory {
                 
                 stmt.close(); //chiudo
                 conn.close();
-                return venditore;
+                return listaVenditori;
             }
         }catch (SQLException e) {
             Logger.getLogger(VenditoreFactory.class.getName()).log(Level.SEVERE, null, e);
           }
         return null;
     }
+    
+     public utenteVenditore getVenditoreById (Integer id){
+        utenteVenditore vend = null;
+        try {
+            
+            Connection conn = DriverManager.getConnection(connectionString, "vicky", "123");
+             //Sql command
+            String query = "select * from utenteCliente where id = ? ";
+            
+            PreparedStatement stmt = conn.prepareStatement(query);
+            // Si associano valori e posizioni 
+            stmt.setInt(1, id);
+            //esegui query
+            ResultSet res = stmt.executeQuery(); //prendo i risultati e gli restituisco il valore dell'esecuzione della query
+            
+            //per vedere se ci sono i risultati controllo il contenuto di res
+            if(res.next())
+            {
+                vend = new utenteVenditore();
+                vend.setId(res.getInt("id"));
+                vend.setUser(res.getString("username"));
+                vend.setPwd(res.getString("pwd"));
+                
+            }
+        }catch (SQLException e) {
+            Logger.getLogger(ClienteFactory.class.getName()).log(Level.SEVERE, null, e);
+          }
+        return vend;
+    }
+     
+     public utenteVenditore getVenditore(String username, String password){
+        utenteVenditore vend = null;
 
+        String query = "SELECT * FROM utenteCliente WHERE username = ? AND password = ?";
+       
+        try(Connection conn = DriverManager.getConnection(connectionString, "vicky", "123");
+            PreparedStatement stmt = conn.prepareStatement(query)){
+
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            //Eseguo la query
+            ResultSet res = stmt.executeQuery();
+            
+            
+            if(res.next()){
+                vend = new utenteVenditore();
+                vend.setId(res.getInt("id"));
+                vend.setUser(res.getString("username"));
+                vend.setPwd(res.getString("pwd"));
+                
+            }
+        }catch (SQLException e) {
+            Logger.getLogger(ClienteFactory.class.getName()).log(Level.SEVERE, null, e);
+          }
+        return vend;
+    }
 }

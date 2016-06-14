@@ -1,19 +1,4 @@
-Tue May 24 16:21:11 CEST 2016 : Server di rete Apache Derby: 10.11.1.2 - (1629631) avviato e pronto ad accettare connessioni sulla porta 1527
+Sun Jun 12 16:59:05 CEST 2016 : Server di rete Apache Derby: 10.11.1.2 - (1629631) avviato e pronto ad accettare connessioni sulla porta 1527
 ----------------------------------------------------------------
-Tue May 24 16:21:13 CEST 2016:
-Avvio della versione di Derby The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): istanza a816c00e-0154-e324-09d0-ffffee2806de
-sulla directory di database /home/vicky/NetBeansProjects/AmmGruppoA/AmmGruppoA/AmmGruppoA/AmmM4/web/WEB-INF/db/ammdb con caricatore classi sun.misc.Launcher$AppClassLoader@5e2de80c 
-Caricato da file:/home/vicky/Scaricati/jdk1.8.0_73/db/lib/derby.jar
-java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_73-b02
-user.dir=/home/vicky/Scaricati/jdk1.8.0_73/db
-os.name=Linux
-os.arch=amd64
-os.version=3.16.0-71-generic
-derby.system.home=/home/vicky/NetBeansProjects/AmmGruppoA/AmmGruppoA/AmmGruppoA/AmmM4/web/WEB-INF/db
-Programma di caricamento classe database avviato - derby.database.classpath=''
+Sun Jun 12 17:24:05 CEST 2016: arresto in corso del motore di Derby
 ----------------------------------------------------------------
-Tue May 24 18:02:49 CEST 2016: arresto in corso del motore di Derby
-----------------------------------------------------------------
-Tue May 24 18:02:49 CEST 2016:
-Arresto dell'istanza a816c00e-0154-e324-09d0-ffffee2806de nella directory del database /home/vicky/NetBeansProjects/AmmGruppoA/AmmGruppoA/AmmGruppoA/AmmM4/web/WEB-INF/db/ammdb con il caricatore di classi sun.misc.Launcher$AppClassLoader@5e2de80c 

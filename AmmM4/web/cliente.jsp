@@ -13,9 +13,11 @@
         <meta name="author" content="Vittoria Frau">
         <meta name="keywords" content="scarpe, vestiti, abbigliamento, moda, saldi, outlet">   
         <link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+        <script type="text/javascript" src="js/jquery-3.0.0.js"></script>
+        <script type="text/javascript" src="js/filter.js"></script>
     </head>
     <body>  
-        <div class="page">
+        
         
         <div class="header">
         <!-- titolo -->
@@ -32,7 +34,7 @@
         </nav>
     </div>
             
-        <div class="content"> 
+         
         <!-- tabella per gli articoli -->
         <table>
             <!-- la prima riga contiene il nome degli oggetti in formato intestazione -->
@@ -70,20 +72,26 @@
           
             <!-- link per aggiungere l'oggetto al carrello (per ora rimanda alla stessa pagina -->
             <td class="cl1">
-                <a href="cliente.html">Aggiungi al carrello!</a> 
+                <a href="cliente.html?id=${i.getId()}">Aggiungi al carrello!</a> 
             </td>
             </tr>
             
             </c:forEach>
         </table>
+        
+        <!-- task 1 della quinta milestone: la label di ricerca --> 
+        <div id="ricerca">
+            <label for="filtra">Cerca</label>
+            <input type="search" name="filtra" id="filtra" value="" />
         </div>
+        
         
     
             
         <div class="footer">
              <jsp:include page="WEB-INF/repeat/footer.jsp" />
         </div>
-        </div>
+        
         
         
         

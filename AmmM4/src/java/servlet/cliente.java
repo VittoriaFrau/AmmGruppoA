@@ -41,6 +41,7 @@ public class cliente extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        //non creo nuovamente la sessione nel caso ci sia già
         HttpSession session = request.getSession(false);
         
         //Nel caso l’utente non sia autenticato o non sia un cliente, deve mostrare un messaggio di accesso negato
@@ -51,38 +52,36 @@ public class cliente extends HttpServlet {
         //Nel caso l’utente sia un cliente, deve mostrare la lista degli oggetti.
         if(request.getParameter("Submit") == null){
             request.getRequestDispatcher("cliente.jsp").forward(request, response);
-        }
+        }else{ //se l'utente ha premuto submit
         
-        //Nel caso l’utente selezioni il link per comprare un oggetto,
-        //deve mostrare solo un riepilogo dei dati dell’oggetto ed un pulsante 
-        //per la conferma di acquisto
-        
+        /**Nel caso l’utente selezioni il link per comprare un oggetto,
+        deve mostrare solo un riepilogo dei dati dell’oggetto ed un pulsante 
+        per la conferma di acquisto **/
+        utenteCliente cliente = (utenteCliente)session.getAttribute("nome");
         int id = -1;
         
-        //converto l'Intero per prenderlo come parametro
+        //converto l'intero per prenderlo come parametro
         try{
             id = Integer.parseInt(request.getParameter("id"));
         }catch (RuntimeException e){
-            request.setAttribute("listaOggetti", ObjectFactory.getInstance().getObjectList());
             request.getRequestDispatcher("cliente.jsp").forward(request, response);
         }
         
-        Object comprami = ObjectFactory.getInstance().getObjectbyId(id);
-        if(comprami == null){
+        //creo un nuovo oggetto con l'id dell'oggetto selezionato
+        Object comprami = ObjectFactory.getInstance().getObjectById(id);
+        
+        if(comprami == null){ //controllo che l'oggetto selezionato abbia un id valido
             request.setAttribute("error", true);
             request.setAttribute("listaOggetti", ObjectFactory.getInstance().getObjectList());
             request.getRequestDispatcher("cliente.jsp").forward(request, response);
-        }
-        
-        utenteCliente cliente = (utenteCliente) session.getAttribute("username");
-        String toBuy = request.getParameter("Compra");
-        
-        if(toBuy == null){
-            //l'utente non ha premuto comprami
-            request.setAttribute("objToRecap", comprami);
+        } 
+         
+        if(request.getParameter("compra") == null){ //controllo se nella pagina di riepilogo il cliente ha premuto il pulsante procedi
+            //l'utente non ha premuto procedi
+            request.setAttribute("newObj", comprami);
             request.getRequestDispatcher("riepilogo.jsp").forward(request, response);
-        } else {
-            //l'utente ha premuto comprami
+        } else { 
+            //l'utente ha premuto procedi
             if(comprami.getPrezzo() > SaldoClientiVenditoriFactory.getInstance().getSaldoClientiVenditoribyId(cliente.getId()).getSaldo()){
                 //Non ha abbastanza soldi
                 request.setAttribute("error", true);
@@ -95,6 +94,7 @@ public class cliente extends HttpServlet {
                 request.getRequestDispatcher("cliente.jsp").forward(request, response);
             }
         }
+      }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

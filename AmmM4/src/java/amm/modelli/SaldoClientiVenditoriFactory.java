@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.sql.SQLException;
 import java.sql.Statement;
 /**
@@ -35,7 +36,14 @@ public class SaldoClientiVenditoriFactory {
         return singleton;
     }
     
-    public SaldoClientiVenditori getSaldo(Integer id, double saldo){
+    private SaldoClientiVenditoriFactory(){//costruttore richiamato da getInstance
+    
+    }
+    
+    public ArrayList <SaldoClientiVenditori> getSaldoClientiVenditoriList(Integer id, double saldo){
+        
+        ArrayList <SaldoClientiVenditori> listaSaldoClientiVenditori = new ArrayList<>();
+        
         try{
             String db = "jdbc:derby://localhost:1527/ammdb";
             Connection conn = DriverManager.getConnection(connectionString, "vicky", "123");
@@ -54,10 +62,11 @@ public class SaldoClientiVenditoriFactory {
                 SaldoClientiVenditori Saldo = new SaldoClientiVenditori();
                 Saldo.setId(res.getInt("id"));
                 Saldo.setSaldo(res.getDouble("saldo"));
+                listaSaldoClientiVenditori.add(Saldo);
                 
                 stmt.close();
                 conn.close();
-                return Saldo;
+                return listaSaldoClientiVenditori;
             }
         }catch(SQLException e){
             Logger.getLogger(SaldoClientiVenditoriFactory.class.getName()).log(Level.SEVERE, null, e);
@@ -66,10 +75,32 @@ public class SaldoClientiVenditoriFactory {
     
     }
    
-    private SaldoClientiVenditoriFactory(){//costruttore richiamato da getInstance
-    /*inizializzo la lista SaldoClientiVenditori*/
-   
+    public SaldoClientiVenditori getSaldoClientiVenditoribyId (Integer id){
+        SaldoClientiVenditori saldo = null;
+        try {
+            
+            Connection conn = DriverManager.getConnection(connectionString, "vicky", "123");
+             //Sql command
+            String query = "select * from Object where id = ? ";
+            
+            PreparedStatement stmt = conn.prepareStatement(query);
+            // Si associano valori e posizioni 
+            stmt.setInt(1, id);
+            //esegui query
+            ResultSet res = stmt.executeQuery(); //prendo i risultati e gli restituisco il valore dell'esecuzione della query
+            
+            //per vedere se ci sono i risultati controllo il contenuto di res
+            if(res.next())
+            {
+                saldo = new SaldoClientiVenditori();
+                saldo.setId(res.getInt("id"));
+                saldo.setSaldo(res.getDouble("saldo"));
+                
+            }
+        }catch (SQLException e) {
+            Logger.getLogger(ClienteFactory.class.getName()).log(Level.SEVERE, null, e);
+          }
+        return saldo;
     }
-    
 
 }

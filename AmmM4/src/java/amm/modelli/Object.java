@@ -62,7 +62,6 @@ public class Object {
     }
     
 
-
     public String getNome() {
         return nome;
     }

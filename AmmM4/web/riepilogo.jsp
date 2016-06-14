@@ -20,14 +20,20 @@
             
             <ul>
                 <li>
-                    Hai acquistato ${newObj.getNome()};
+                    Hai scelto ${newObj.getNome()};
                     <li>
                         Per ${newObj.getPrezzo()};
                     </li>
                 
                 </li>
+               
             </ul>
-                    <input type="submit" name="Compra" value="Procedi"/>
+                    
+            <div>
+                 <input type="hidden" name="id" value="${newObj.getId()}" />
+                 <input class="bottone" type="submit" name="compra" value="Procedi"/>
+            </div>
+                   
          <div class="footer">
              <jsp:include page="WEB-INF/repeat/footer.jsp" />
         </div>
